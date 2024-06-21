@@ -1,27 +1,38 @@
-**⚠️ This is currently under development, dont use it yet if you're not comfortable with constantly merging new changes**
+# Cloudstream3 Plugin
 
-# `Cloudstream3 Plugin Repo Template`
+> Attempt to write some plugins for cloudstream
 
-Template for a [Cloudstream3](https://github.com/recloudstream) plugin repo
+Mnemosyne provider
 
-**⚠️ Make sure you check "Include all branches" when using this template**
+* Sflix (WIP from scratch) :x:
 
- 
-## Getting started with writing your first plugin
+* HiAnime (from Rowdy-Avocado) :white_check_mark:
+* Aniwave (from Rowdy-Avocado) :white_check_mark:
+* SuperStream (from Hexated) :white_check_mark:
 
-This template includes 1 example plugin.
+* ZoroTV (TODO from scratch) :x:
+* Onstream (TODO from scratch) :x:
+* SoraStream (from Hexated) :x:
 
-1. Open the root build.gradle.kts, read the comments and replace all the placeholders
-2. Familiarize yourself with the project structure. Most files are commented
-3. Build or deploy your first plugin using:
-   - Windows: `.\gradlew.bat ExampleProvider:make` or `.\gradlew.bat ExampleProvider:deployWithAdb`
-   - Linux & Mac: `./gradlew ExampleProvider:make` or `./gradlew ExampleProvider:deployWithAdb`
 
-## License
+## Docs
 
-Everything in this repo is released into the public domain. You may use it however you want with no conditions whatsoever
+Build and deployment: :ok: (https://shorturl.at/WbYNF)
 
-## Attribution
+* https://recloudstream.github.io/csdocs/devs/create-your-own-providers/#3-loading-the-show-page
+* https://recloudstream.github.io/csdocs/devs/scraping/starting/
 
-This template as well as the gradle plugin and the whole plugin system is **heavily** based on [Aliucord](https://github.com/Aliucord).
-*Go use it, it's a great mobile discord client mod!*
+
+## Debug
+
+```ps1
+adb devices
+adb connect 192.168.1.X:5555
+adb logcat -s mnemo
+```
+
+
+## Notes
+
+* vidcloud / upcloud uses https://rabbitstream.net/
+* 9animetv is the same as Aniwave ?

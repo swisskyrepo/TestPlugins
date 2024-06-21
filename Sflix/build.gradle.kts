@@ -9,9 +9,8 @@ version = -1
 
 cloudstream {
     // All of these properties are optional, you can safely remove them
-
-    description = "Lorem ipsum"
-    authors = listOf("Cloudburst")
+    description = "Sflix"
+    authors = listOf("Mnemosyne")
 
     /**
     * Status int as the following:
@@ -21,9 +20,7 @@ cloudstream {
     * 3: Beta only
     * */
     status = 1
-
     tvTypes = listOf("Movie")
-
     requiresResources = true
     language = "en"
 

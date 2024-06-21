@@ -10,3 +10,6 @@
 .cxx
 local.properties
 .vscode
+/NOTES
+NOTES.md
+scrapping.py
