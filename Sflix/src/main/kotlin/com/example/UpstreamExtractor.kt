@@ -53,42 +53,39 @@ class Upstream : ExtractorApi() {
         Log.d("mnemo", "Upstream extractor enabled")
 
         // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
-        // curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A" | jq -r '.Answer.[].data' 
-        Log.d("mnemo", "DoH start")
         val dnsDoc = app.get(
             "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
             headers = mapOf(
                 "accept" to "application/dns-json"
             )
         ).text
-
         Log.d("mnemo", dnsDoc) 
-        Log.d("mnemo", "DoH stop")
 
         // Parse JSON string to ApiResponse object
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
-        Log.d("mnemo", "JSON decode")
 
         // Extract the desired value
-        val ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.136"
-
-        Log.d("mnemo", "IP start")
-        Log.d("mnemo", "IP ${ipAddress}") 
-        Log.d("mnemo", "IP stop")
-
-
-        // 185.178.208.135
+        // val ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
         // val ipAddress = apiResponse.Answer.find { it.name == "upstream.to" }?.data
+        val ipAddress = "185.178.208.135"
+        Log.d("mnemo", "IP ${ipAddress}") 
+
+
+        // Connect to upstream using the IP and set the Host header
         // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
+        val doc = app.get(url.replace("upstream.to", ipAddress),
+            headers = mapOf(
+                "Host" to "upstream.to"
+            ),
+            referer = referer).text
 
-
-        /*
-        val doc = app.get(url, referer = referer).text
+        
         if (doc.isNotBlank()) {
 
             // Find the matches in |file|01097|01|co|upstreamcdn|s18|HTTP
             val regex = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()
             val matchResult = regex.find(doc)
+
             if (matchResult != null) {
                 val (n2, n1, tld, domain, subdomain) = matchResult.destructured
                 val fullDomain = "$subdomain.$domain.$tld"
@@ -111,21 +108,24 @@ class Upstream : ExtractorApi() {
                 var i = "0.0" // &i=0.0&5
                 var sp = "0" // TODO
 
-
+                // ${fullDomain}
                 // https://s18.upstreamcdn.co/hls2/01/01097/9qx7lhnoezn_n/master.m3u8?t=bYYSztvRHlImhy_PjVqV91W7oXRu4LXALz76pLJPFI&s=1719404641&e=10800&f=5485070&i=0.0&sp=0
-                val linkUrl = "https://${fullDomain}/hls2/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
-
+                val linkUrl = "https://51.83.140.60/hls2/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
                 Log.d("mnemo", "Testing ${linkUrl}")
+
                 M3u8Helper.generateM3u8(
                     this.name,
                     linkUrl,
                     "$mainUrl/",
-                    headers = mapOf("Origin" to mainUrl)
+                    headers = mapOf(
+                        "Host" to "s18.upstreamcdn.co",
+                        "Origin" to mainUrl
+                    )
                 ).forEach(callback)
             }
         }
         else{
             Log.d("mnemo", "Got nothing, are you banned ?")
-        }*/
+        }
     }
 }
