@@ -69,8 +69,10 @@ class Upstream : ExtractorApi() {
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
 
         // Extract the desired value
-        val ipAddress = apiResponse.Answer.firstOrNull()?.data
-        Log.d("mnemo", "IP ${ipAddress}") // 185.178.208.135
+        val ipAddress = apiResponse.Answer.data
+        Log.d("mnemo", "IP ${ipAddress}") 
+        Log.d("mnemo", "IP EOF") 
+        // 185.178.208.135
 
 
         // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
