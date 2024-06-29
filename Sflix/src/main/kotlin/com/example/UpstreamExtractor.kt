@@ -51,7 +51,7 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
-        Log.d("mnemo", "Test-4")
+        Log.d("mnemo", "Test-4.1")
 
         // // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
         // val dnsDoc = app.get(
@@ -86,7 +86,7 @@ class Upstream : ExtractorApi() {
             val matchResult1 = regex1.find(doc)
 
             // Find the matches in master|9qx7lhanoezn_n|hls2
-            val regex2 = """\|master\|(\w+)\|hls2""".toRegex()
+            val regex2 = """\|master\|(\w+)\|(\w+)\|sources""".toRegex()
             val matchResult2 = regex2.find(doc)
 
             // Find the matches in sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
@@ -101,7 +101,7 @@ class Upstream : ExtractorApi() {
 
             if (matchResult1 != null && matchResult2 != null && matchResult3 != null && matchResult4 != null) {
                 val (n2, n1, tld, domain, subdomain) = matchResult1.destructured
-                var id = matchResult2.destructured // "9qx7lhanoezn_n"
+                var (id,format) = matchResult2.destructured // master|9qx7lhanoezn_n|hls2|sources
                 var (e,t) = matchResult3.destructured // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
                 var (s,f) = matchResult4.destructured // |data|1719404641|5485070||hide|
                 val fullDomain = "$subdomain.$domain.$tld"
@@ -118,7 +118,7 @@ class Upstream : ExtractorApi() {
                 var i = "0.0" // &i=0.0&5
                 var sp = "0" //
 
-                val linkUrl = "https://${fullDomain}/hls2/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
+                val linkUrl = "https://${fullDomain}/${format}/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
                 Log.d("mnemo", "Testing ${linkUrl}")
 
                 M3u8Helper.generateM3u8(
