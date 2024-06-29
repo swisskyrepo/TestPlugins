@@ -67,7 +67,6 @@ class Upstream : ExtractorApi() {
 
         // Parse JSON string to ApiResponse object
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
-        Log.d("mnemo", apiResponse) 
 
         // Extract the desired value
         val ipAddress = apiResponse.Answer.firstOrNull()?.data
