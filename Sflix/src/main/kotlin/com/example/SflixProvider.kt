@@ -19,7 +19,7 @@ import org.jsoup.Jsoup
 class ExampleProvider(val plugin: TestPlugin) : MainAPI() { 
     // all providers must be an instance of MainAPI
     override var mainUrl = "https://sflix.to" 
-    override var name = "Mnemosyne"
+    override var name = "Sflix"
     override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries, TvType.Anime)
     override var lang = "en"
 

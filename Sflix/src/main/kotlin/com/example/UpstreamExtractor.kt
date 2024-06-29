@@ -52,15 +52,16 @@ class Upstream : ExtractorApi() {
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
 
-
         // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
         // curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A" | jq -r '.Answer.[].data' 
+        Log.d("mnemo", "DoH start")
         val dnsDoc = app.get(
             "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
             headers = mapOf(
                 "x-accept" to "application/dns-json"
             )
         ).text
+        Log.d("mnemo", "DoH stop")
 
         // Parse JSON string to ApiResponse object
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
