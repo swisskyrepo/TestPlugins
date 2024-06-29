@@ -69,13 +69,16 @@ class Upstream : ExtractorApi() {
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
 
         // Extract the desired value
-        val ipAddress = apiResponse.Answer.data
+        val ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.136"
+
         Log.d("mnemo", "IP ${ipAddress}") 
-        Log.d("mnemo", "IP EOF") 
+        Log.d("mnemo", "IP stop")
+
+
         // 185.178.208.135
-
-
+        // val ipAddress = apiResponse.Answer.find { it.name == "upstream.to" }?.data
         // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
+
 
 
         val doc = app.get(url, referer = referer).text
