@@ -51,7 +51,7 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
-        Log.d("mnemo", "Test-4.2")
+        Log.d("mnemo", "Test-4.3")
 
         // // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
         // val dnsDoc = app.get(
@@ -80,6 +80,9 @@ class Upstream : ExtractorApi() {
 
         if (doc.isNotBlank()) {
             Log.d("mnemo", "Doc loaded")
+            Log.d("mnemo", doc)
+
+            // |stretching|jpg|co|upstreamcdn|image|p2|p1|sp|srv|10800|Vgl_12PwxVkiGOdSB5FxUuphliDkdPsIx2FCzuyIC|m3u8|master|9qx7lhanoezn_n|hls2|sources|setup|P2P|Total|else
 
             // Find the matches in |file|01097|01|co|upstreamcdn|s18|HTTP
             val regex1 = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()
