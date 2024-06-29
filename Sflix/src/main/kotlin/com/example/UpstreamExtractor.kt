@@ -6,6 +6,38 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import android.util.Log
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.decodeFromString
+
+
+// Define data classes for the JSON structure
+@Serializable
+data class Question(
+    val name: String,
+    val type: Int
+)
+
+@Serializable
+data class Answer(
+    val name: String,
+    val type: Int,
+    val TTL: Int,
+    val data: String
+)
+
+@Serializable
+data class ApiResponse(
+    val Status: Int,
+    val TC: Boolean,
+    val RD: Boolean,
+    val RA: Boolean,
+    val AD: Boolean,
+    val CD: Boolean,
+    val Question: List<Question>,
+    val Answer: List<Answer>
+)
+
 
 class Upstream : ExtractorApi() {
     override val name: String = "Upstream"
@@ -19,6 +51,28 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
+
+
+        // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
+        // curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A" | jq -r '.Answer.[].data' 
+        val dnsDoc = app.get(
+            "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
+            headers = mapOf(
+                "x-accept" to "application/dns-json"
+            )
+        ).text
+
+        // Parse JSON string to ApiResponse object
+        val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
+
+        // Extract the desired value
+        val ipAddress = apiResponse.Answer.firstOrNull()?.data
+        Log.d("mnemo", "IP ${ipAddress}") // 185.178.208.135
+
+
+        // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
+
+
         val doc = app.get(url, referer = referer).text
         if (doc.isNotBlank()) {
 
