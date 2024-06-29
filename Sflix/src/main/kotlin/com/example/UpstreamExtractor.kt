@@ -51,21 +51,22 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
-        Log.d("mnemo", "Test-2")
+        Log.d("mnemo", "Test-3")
 
-        // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
-        val dnsDoc = app.get(
-            "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
-            headers = mapOf(
-                "accept" to "application/dns-json"
-            )
-        ).text
+        // // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
+        // val dnsDoc = app.get(
+        //     "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
+        //     headers = mapOf(
+        //         "accept" to "application/dns-json"
+        //     )
+        // ).text
 
-        // Parse JSON string to ApiResponse object
-        val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
+        // // Parse JSON string to ApiResponse object
+        // val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
 
-        // Extract the desired value
-        var ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
+        // // Extract the desired value
+        // var ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
+        var ipAddress = "185.178.208.135"
         Log.d("mnemo", "IP ${ipAddress}")
 
         // Connect to upstream using the IP and set the Host header
