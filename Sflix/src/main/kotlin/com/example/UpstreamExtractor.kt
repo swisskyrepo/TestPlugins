@@ -51,26 +51,22 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
-        Log.d("mnemo", "Test1")
+        Log.d("mnemo", "Test-2")
 
         // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
-        // val dnsDoc = app.get(
-        //     "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
-        //     headers = mapOf(
-        //         "accept" to "application/dns-json"
-        //     )
-        // ).text
+        val dnsDoc = app.get(
+            "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
+            headers = mapOf(
+                "accept" to "application/dns-json"
+            )
+        ).text
 
         // Parse JSON string to ApiResponse object
-        // val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
+        val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
 
         // Extract the desired value
-        // val ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
-        // val ipAddress = apiResponse.Answer.find { it.name == "upstream.to" }?.data
-        var ipAddress = "185.178.208.135"
-        Log.d("mnemo", "After IP set")
+        var ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
         Log.d("mnemo", "IP ${ipAddress}")
-        Log.d("mnemo", "After IP print")
 
         // Connect to upstream using the IP and set the Host header
         // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
@@ -98,12 +94,11 @@ class Upstream : ExtractorApi() {
 
                 var id = "9qx7lhanoezn_n" // master|9qx7lhanoezn_n|hls2
 
-
-                var t = "bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI" // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
+                var t = "-NMJni7QzajykAnt5wNWwRXuNwDBYpNAYlcyIWv8Xug" // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
                 var e = "10800"
 
 
-                var s = "1719404641" // |data|1719404641|5485070||hide|
+                var s = "1719684462" // |data|1719404641|5485070||hide|
                 var f = "5485070"
 
 
