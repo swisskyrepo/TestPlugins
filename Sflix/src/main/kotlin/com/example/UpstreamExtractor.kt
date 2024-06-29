@@ -51,7 +51,7 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
-        Log.d("mnemo", "Test-3")
+        Log.d("mnemo", "Test-4")
 
         // // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
         // val dnsDoc = app.get(
@@ -122,9 +122,10 @@ class Upstream : ExtractorApi() {
                 Log.d("mnemo", "Testing ${linkUrl}")
 
                 M3u8Helper.generateM3u8(
-                    this.name,
-                    linkUrl.replace("s18.upstreamcdn.co", "51.83.140.60"),
-                    "$mainUrl/",
+                    "Upstream", // source
+                    linkUrl.replace("s18.upstreamcdn.co", "51.83.140.60"), // streamUrl
+                    "$mainUrl/", // referer
+                    // quality
                     headers = mapOf(
                         "Host" to "s18.upstreamcdn.co",
                         "Origin" to mainUrl
