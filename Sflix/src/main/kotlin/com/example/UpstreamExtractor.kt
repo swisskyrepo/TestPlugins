@@ -82,38 +82,48 @@ class Upstream : ExtractorApi() {
             Log.d("mnemo", "Doc loaded")
 
             // Find the matches in |file|01097|01|co|upstreamcdn|s18|HTTP
-            val regex = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()
-            val matchResult = regex.find(doc)
+            val regex1 = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()
+            val matchResult1 = regex1.find(doc)
 
-            if (matchResult != null) {
-                val (n2, n1, tld, domain, subdomain) = matchResult.destructured
+            // Find the matches in master|9qx7lhanoezn_n|hls2
+            val regex2 = """\|master\|(\w+)\|hls2""".toRegex()
+            val matchResult2 = regex2.find(doc)
+
+            // Find the matches in sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
+            val regex3 = """sp\|(\d+)\|(\w+)\|m3u8""".toRegex()
+            val matchResult3 = regex3.find(doc)
+            
+
+            // Find the matches in data|1719404641|5485070||hide
+            val regex4 = """data\|(\d+)\|(\d+)\|\|hide""".toRegex()
+            val matchResult4 = regex4.find(doc)
+
+
+            if (matchResult1 != null) {
+                val (n2, n1, tld, domain, subdomain) = matchResult1.destructured
+                var id = matchResult2.destructured // "9qx7lhanoezn_n"
+                var (e,t) = matchResult3.destructured // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
+                var (s,f) = matchResult3.destructured // |data|1719404641|5485070||hide|
                 val fullDomain = "$subdomain.$domain.$tld"
 
                 Log.d("mnemo", "n2 = \"$n2\"")
                 Log.d("mnemo", "n1 = \"$n1\"")
                 Log.d("mnemo", "domain = \"$fullDomain\"")
-
-                var id = "9qx7lhanoezn_n" // master|9qx7lhanoezn_n|hls2
-
-                var t = "-NMJni7QzajykAnt5wNWwRXuNwDBYpNAYlcyIWv8Xug" // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
-                var e = "10800"
-
-
-                var s = "1719684462" // |data|1719404641|5485070||hide|
-                var f = "5485070"
-
+                Log.d("mnemo", "id = \"$id\"")
+                Log.d("mnemo", "t = \"$t\"")
+                Log.d("mnemo", "e = \"$e\"")
+                Log.d("mnemo", "s = \"$s\"")
+                Log.d("mnemo", "f = \"$f\"")
 
                 var i = "0.0" // &i=0.0&5
-                var sp = "0" // TODO
+                var sp = "0" //
 
-                // ${fullDomain}
-                // https://s18.upstreamcdn.co/hls2/01/01097/9qx7lhnoezn_n/master.m3u8?t=bYYSztvRHlImhy_PjVqV91W7oXRu4LXALz76pLJPFI&s=1719404641&e=10800&f=5485070&i=0.0&sp=0
-                val linkUrl = "https://51.83.140.60/hls2/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
+                val linkUrl = "https://${fullDomain}/hls2/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
                 Log.d("mnemo", "Testing ${linkUrl}")
 
                 M3u8Helper.generateM3u8(
                     this.name,
-                    linkUrl,
+                    linkUrl.replace("s18.upstreamcdn.co", "51.83.140.60"),
                     "$mainUrl/",
                     headers = mapOf(
                         "Host" to "s18.upstreamcdn.co",
