@@ -59,7 +59,6 @@ class Upstream : ExtractorApi() {
                 "accept" to "application/dns-json"
             )
         ).text
-        Log.d("mnemo", dnsDoc) 
 
         // Parse JSON string to ApiResponse object
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
@@ -68,8 +67,7 @@ class Upstream : ExtractorApi() {
         // val ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
         // val ipAddress = apiResponse.Answer.find { it.name == "upstream.to" }?.data
         val ipAddress = "185.178.208.135"
-        Log.d("mnemo", "IP ${ipAddress}") 
-
+        Log.d("mnemo", "IP ${ipAddress}")
 
         // Connect to upstream using the IP and set the Host header
         // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
@@ -79,8 +77,9 @@ class Upstream : ExtractorApi() {
             ),
             referer = referer).text
 
-        
+
         if (doc.isNotBlank()) {
+            Log.d("mnemo", "Doc loaded")
 
             // Find the matches in |file|01097|01|co|upstreamcdn|s18|HTTP
             val regex = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()

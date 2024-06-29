@@ -193,7 +193,7 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
                 }
             }
 
-            Log.d("mnemo", episodes.toString());   
+            // Log.d("mnemo", episodes.toString());   
             return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
                 this.posterUrl = posterUrl
                 this.plot = plot

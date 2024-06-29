@@ -5,8 +5,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 }
 // use an integer for version numbers
-version = -1
-
+version = 1
 
 cloudstream {
     // All of these properties are optional, you can safely remove them
@@ -21,7 +20,11 @@ cloudstream {
     * 3: Beta only
     * */
     status = 1
-    tvTypes = listOf("Movie")
+    tvTypes = listOf(
+        "Anime",
+        "TvSeries",
+        "Movie",
+    )
     requiresResources = true
     language = "en"
 
