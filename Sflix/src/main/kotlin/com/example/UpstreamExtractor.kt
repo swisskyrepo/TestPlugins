@@ -58,13 +58,16 @@ class Upstream : ExtractorApi() {
         val dnsDoc = app.get(
             "https://cloudflare-dns.com/dns-query?name=upstream.to&type=A", 
             headers = mapOf(
-                "x-accept" to "application/dns-json"
+                "accept" to "application/dns-json"
             )
         ).text
+
+        Log.d("mnemo", dnsDoc) 
         Log.d("mnemo", "DoH stop")
 
         // Parse JSON string to ApiResponse object
         val apiResponse = Json.decodeFromString<ApiResponse>(dnsDoc)
+        Log.d("mnemo", apiResponse) 
 
         // Extract the desired value
         val ipAddress = apiResponse.Answer.firstOrNull()?.data
