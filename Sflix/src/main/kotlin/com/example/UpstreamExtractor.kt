@@ -51,6 +51,7 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
+        Log.d("mnemo", "Test1")
 
         // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
         // val dnsDoc = app.get(
@@ -66,8 +67,10 @@ class Upstream : ExtractorApi() {
         // Extract the desired value
         // val ipAddress = if (apiResponse.Answer.isNotEmpty()) apiResponse.Answer[0].data else "185.178.208.135"
         // val ipAddress = apiResponse.Answer.find { it.name == "upstream.to" }?.data
-        val ipAddress = "185.178.208.135"
+        var ipAddress = "185.178.208.135"
+        Log.d("mnemo", "After IP set")
         Log.d("mnemo", "IP ${ipAddress}")
+        Log.d("mnemo", "After IP print")
 
         // Connect to upstream using the IP and set the Host header
         // curl https://185.178.208.135/embed-9qx7lhanoezn.html -k -H 'Host: upstream.to'
