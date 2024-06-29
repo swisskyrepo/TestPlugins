@@ -99,11 +99,11 @@ class Upstream : ExtractorApi() {
             val matchResult4 = regex4.find(doc)
 
 
-            if (matchResult1 != null) {
+            if (matchResult1 != null && matchResult2 != null && matchResult3 != null && matchResult4 != null) {
                 val (n2, n1, tld, domain, subdomain) = matchResult1.destructured
                 var id = matchResult2.destructured // "9qx7lhanoezn_n"
                 var (e,t) = matchResult3.destructured // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
-                var (s,f) = matchResult3.destructured // |data|1719404641|5485070||hide|
+                var (s,f) = matchResult4.destructured // |data|1719404641|5485070||hide|
                 val fullDomain = "$subdomain.$domain.$tld"
 
                 Log.d("mnemo", "n2 = \"$n2\"")
