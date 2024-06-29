@@ -51,7 +51,7 @@ class Upstream : ExtractorApi() {
         callback: (ExtractorLink) -> Unit
     ) {
         Log.d("mnemo", "Upstream extractor enabled")
-        Log.d("mnemo", "Test-4.1")
+        Log.d("mnemo", "Test-4.2")
 
         // // Bypass ISP blocking with DNS over HTTP to resolve the IP for upstream
         // val dnsDoc = app.get(
@@ -85,8 +85,8 @@ class Upstream : ExtractorApi() {
             val regex1 = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()
             val matchResult1 = regex1.find(doc)
 
-            // Find the matches in master|9qx7lhanoezn_n|hls2
-            val regex2 = """\|master\|(\w+)\|(\w+)\|sources""".toRegex()
+            // Find the matches in master|9qx7lhanoezn_n|hls2|
+            val regex2 = """\|master\|(\w+)\|(\w+)\|""".toRegex()
             val matchResult2 = regex2.find(doc)
 
             // Find the matches in sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
@@ -97,7 +97,6 @@ class Upstream : ExtractorApi() {
             // Find the matches in data|1719404641|5485070||hide
             val regex4 = """data\|(\d+)\|(\d+)\|\|hide""".toRegex()
             val matchResult4 = regex4.find(doc)
-
 
             if (matchResult1 != null && matchResult2 != null && matchResult3 != null && matchResult4 != null) {
                 val (n2, n1, tld, domain, subdomain) = matchResult1.destructured
