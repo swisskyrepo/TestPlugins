@@ -53,7 +53,7 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
     }
 
 
-    override val mainPage = mainPageOf(
+    /*override val mainPage = mainPageOf(
         "tv-show" to "TV Show",
         "movie" to "Movie",
         "top-imdb" to "Top-IMDB",
@@ -83,6 +83,38 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
             ),
             hasNext = true
         )
+    }*/
+
+
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val html = app.get("$mainUrl/home").text
+        val document = Jsoup.parse(html)
+        val all = ArrayList<HomePageList>()
+
+        val map = mapOf(
+            "Trending Movies" to "div#trending-movies",
+            "Trending TV Shows" to "div#trending-tv",
+            // "Latest Movies" to "div#trending-tv", // film_list-wrap
+            // "Latest TV Shows" to "div#trending-tv", // film_list-wrap
+        )
+        map.forEach {
+            all.add(HomePageList(
+                it.key,
+                document.select(it.value).select("div.flw-item").map { element ->
+                    element.toSearchResult()
+                }
+            ))
+        }
+
+        document.select("section.block_area.block_area_home.section-id-02").forEach {
+            val title = it.select("h2.cat-heading").text().trim()
+            val elements = it.select("div.flw-item").map { element ->
+                element.toSearchResult()
+            }
+            all.add(HomePageList(title, elements))
+        }
+
+        return HomePageResponse(all)
     }
 
 

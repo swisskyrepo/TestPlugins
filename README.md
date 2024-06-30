@@ -2,17 +2,15 @@
 
 > Attempt to write some plugins for cloudstream
 
-Mnemosyne provider
-
 * Sflix (WIP from scratch) :x:
 
 * HiAnime (from Rowdy-Avocado) :white_check_mark:
 * Aniwave (from Rowdy-Avocado) :white_check_mark:
 * SuperStream (from Hexated) :white_check_mark:
+* SoraStream (from Hexated) :white_check_mark:
 
 * ZoroTV (TODO from scratch) :x:
 * Onstream (TODO from scratch) :x:
-* SoraStream (from Hexated) :x:
 * HDToday :x:
 
 
