@@ -15,6 +15,7 @@ import com.lagradost.cloudstream3.extractors.DoodLaExtractor
 import com.lagradost.cloudstream3.extractors.MixDrop
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 
 class ExampleProvider(val plugin: TestPlugin) : MainAPI() { 
     // all providers must be an instance of MainAPI
