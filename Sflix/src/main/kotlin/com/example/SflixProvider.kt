@@ -118,6 +118,61 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
     }
 
 
+    private fun Element.toSearchResult(): SearchResponse {
+        val inner = this.selectFirst("div.film-poster")
+        val img = inner!!.select("img")
+        val title = img.attr("title")
+        val posterUrl = img.attr("data-src") ?: img.attr("src")
+        val href = fixUrl(inner.select("a").attr("href"))
+        val isMovie = href.contains("/movie/")
+        val otherInfo =
+            this.selectFirst("div.film-detail > div.fd-infor")?.select("span")?.toList() ?: listOf()
+        //var rating: Int? = null
+        var year: Int? = null
+        var quality: SearchQuality? = null
+        when (otherInfo.size) {
+            1 -> {
+                year = otherInfo[0]?.text()?.trim()?.toIntOrNull()
+            }
+            2 -> {
+                year = otherInfo[0]?.text()?.trim()?.toIntOrNull()
+            }
+            3 -> {
+                //rating = otherInfo[0]?.text()?.toRatingInt()
+                quality = getQualityFromString(otherInfo[1]?.text())
+                year = otherInfo[2]?.text()?.trim()?.toIntOrNull()
+            }
+        }
+
+        return if (isMovie) {
+            MovieSearchResponse(
+                title,
+                href,
+                "Sflix.to",
+                TvType.Movie,
+                posterUrl = posterUrl,
+                year = year,
+                quality = quality,
+            )
+        } else {
+            TvSeriesSearchResponse(
+                title,
+                href,
+                "Sflix.to",
+                TvType.Movie,
+                posterUrl,
+                year = year,
+                episodes = null,
+                quality = quality,
+            )
+        }
+    }
+
+
+
+
+
+
     // start with movie easier than tv series
     // this function only displays info about movies and series
     override suspend fun load(url: String): LoadResponse {
@@ -239,7 +294,6 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
             }
         }
     }
-
 
 
     // this function loads the links (upcloud/vidcloud/doodstream/other)
