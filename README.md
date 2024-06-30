@@ -1,4 +1,4 @@
-# Cloudstream3 Plugin
+# Mnemosyne
 
 > Attempt to write some plugins for cloudstream
 
@@ -13,6 +13,7 @@ Mnemosyne provider
 * ZoroTV (TODO from scratch) :x:
 * Onstream (TODO from scratch) :x:
 * SoraStream (from Hexated) :x:
+* HDToday :x:
 
 
 ## Docs
@@ -36,3 +37,4 @@ adb logcat -s mnemo
 
 * vidcloud / upcloud uses https://rabbitstream.net/
 * 9animetv is the same as Aniwave ?
+* upstream.to is using hls2

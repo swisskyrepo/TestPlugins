@@ -79,10 +79,7 @@ class Upstream : ExtractorApi() {
 
 
         if (doc.isNotBlank()) {
-            Log.d("mnemo", "Doc loaded")
-            Log.d("mnemo", doc)
-
-            // |stretching|jpg|co|upstreamcdn|image|p2|p1|sp|srv|10800|Vgl_12PwxVkiGOdSB5FxUuphliDkdPsIx2FCzuyIC|m3u8|master|9qx7lhanoezn_n|hls2|sources|setup|P2P|Total|else
+            Log.d("mnemo", "upstream.to loaded")
 
             // Find the matches in |file|01097|01|co|upstreamcdn|s18|HTTP
             val regex1 = """\|file\|(\d+)\|(\d+)\|(\w+)\|(\w+)\|(\w+)\|HTTP""".toRegex()
@@ -107,6 +104,8 @@ class Upstream : ExtractorApi() {
                 var (e,t) = matchResult3.destructured // sp|10800|bYYSztvRHlImhy_PjVqV91W7EoXRu4LXALz76pLJPFI|m3u8
                 var (s,f) = matchResult4.destructured // |data|1719404641|5485070||hide|
                 val fullDomain = "$subdomain.$domain.$tld"
+                var i = "0.0"
+                var sp = "0" 
 
                 Log.d("mnemo", "n2 = \"$n2\"")
                 Log.d("mnemo", "n1 = \"$n1\"")
@@ -116,9 +115,6 @@ class Upstream : ExtractorApi() {
                 Log.d("mnemo", "e = \"$e\"")
                 Log.d("mnemo", "s = \"$s\"")
                 Log.d("mnemo", "f = \"$f\"")
-
-                var i = "0.0" // &i=0.0&5
-                var sp = "0" //
 
                 val linkUrl = "https://${fullDomain}/${format}/${n1}/${n2}/${id}/master.m3u8?t=${t}&s=${s}&e=${e}&f=${f}&i=${i}&sp=${sp}"
                 Log.d("mnemo", "Testing ${linkUrl}")
