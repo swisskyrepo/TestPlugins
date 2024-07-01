@@ -26,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [BlankFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class BlankFragment(val plugin: TestPlugin) : BottomSheetDialogFragment() {
+class BlankFragment(val plugin: SflixPlugin) : BottomSheetDialogFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

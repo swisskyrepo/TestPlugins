@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-class SflixProvider(val plugin: TestPlugin) : MainAPI() { 
+class SflixProvider(val plugin: SflixPlugin) : MainAPI() { 
     // all providers must be an instance of MainAPI
     override var mainUrl = "https://sflix.to" 
     override var name = "Sflix"
