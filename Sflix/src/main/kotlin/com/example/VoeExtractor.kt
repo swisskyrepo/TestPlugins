@@ -1,4 +1,4 @@
-package com.lagradost.cloudstream3.extractors
+package com.example
 
 import android.util.Base64
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -8,8 +8,9 @@ import com.lagradost.cloudstream3.utils.AppUtils
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
+import android.util.Log
 
-open class Voe2 : ExtractorApi() {
+class Voe2 : ExtractorApi() {
     override val name = "Voe"
     override val mainUrl = "https://voe.sx"
     override val requiresReferer = true

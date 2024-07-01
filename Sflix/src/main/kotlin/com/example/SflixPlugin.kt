@@ -24,7 +24,7 @@ class SflixPlugin: Plugin() {
         addExtractor(Upstream())
         addExtractor(Voe2())
 
-        registerMainAPI(ExampleProvider(this))
+        registerMainAPI(SflixProvider(this))
 
         openSettings = { ctx ->
             val frag = BlankFragment(this)
