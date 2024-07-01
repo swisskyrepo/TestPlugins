@@ -51,8 +51,8 @@ class Voe2 : ExtractorApi() {
                 videoLinkDTO.let { videoLinks.add(it.toString()) }
             }
             
-            Log.d("mnemo", "voe.sx video link: ${videoLink}")
             videoLinks.forEach { videoLink ->
+                Log.d("mnemo", "voe.sx video link: ${videoLink}")
                 M3u8Helper.generateM3u8(
                     name,
                     videoLink,
