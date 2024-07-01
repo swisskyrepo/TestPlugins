@@ -29,17 +29,14 @@ class Voe2 : ExtractorApi() {
         // Extract the first redirect URL, like https://roberteachfinal.com/e/xxxxxxx
         val voeDoc = app.get(url, referer = referer).document
         val redirRegex = """window.location.href = '(.*)'""".toRegex()
-        val redirResult = redirRegex.find(voeDoc)
+        val redirResult = redirRegex.find(voeDoc.html())?.groupValues?.get(1)
         if (redirResult != null){
             Log.d("mnemo", redirResult)
         }
         else{
             Log.d("mnemo", "voe.sx redir not found")
         }
-        
-
-
-
+    
 
 
 
