@@ -126,6 +126,7 @@ class Upstream : ExtractorApi() {
                     // quality
                     headers = mapOf(
                         "Host" to "s18.upstreamcdn.co",
+                        "Referer" to "https://upstream.to/",
                         "Origin" to mainUrl
                     )
                 ).forEach(callback)

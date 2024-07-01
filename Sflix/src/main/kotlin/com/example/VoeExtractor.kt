@@ -24,14 +24,14 @@ class Voe2 : ExtractorApi() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        Log.d("mnemo", "voe.sx loaded")
+        // Log.d("mnemo", "voe.sx loaded")
 
         // Extract the first redirect URL, like https://roberteachfinal.com/e/xxxxxxx
         val voeDoc = app.get(url, referer = referer).document
         val redirRegex = """window.location.href = '(.*)'""".toRegex()
         val redirResult = redirRegex.find(voeDoc.html())?.groupValues?.get(1)
         if (redirResult != null){
-            Log.d("mnemo", "voe.sx redirect: ${redirResult}")
+            // Log.d("mnemo", "voe.sx redirect: ${redirResult}")
             val res = app.get(redirResult, referer = referer).document
             val script = res.select("script").find { it.data().contains("sources =") }?.data()
             val link = Regex("[\"']hls[\"']:\\s*[\"'](.*)[\"']").find(script ?: return)?.groupValues?.get(1)
@@ -52,7 +52,7 @@ class Voe2 : ExtractorApi() {
             }
             
             videoLinks.forEach { videoLink ->
-                Log.d("mnemo", "voe.sx video link: ${videoLink}")
+                // Log.d("mnemo", "voe.sx video link: ${videoLink}")
                 M3u8Helper.generateM3u8(
                     name,
                     videoLink,

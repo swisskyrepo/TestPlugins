@@ -2,8 +2,7 @@
 
 > Attempt to write some plugins for cloudstream
 
-* Sflix (WIP from scratch) :x:
-
+* Sflix (from scratch) :white_check_mark:
 * HiAnime (from Rowdy-Avocado) :white_check_mark:
 * Aniwave (from Rowdy-Avocado) :white_check_mark:
 * SuperStream (from Hexated) :white_check_mark:
@@ -11,8 +10,7 @@
 
 * ZoroTV (TODO from scratch) :x:
 * Onstream (TODO from scratch) :x:
-* HDToday :x:
-
+* HDToday (TODO from scratch) :x:   (upcloud/vidcloud/upstream/mixdrop)
 
 ## Docs
 
@@ -35,4 +33,4 @@ adb logcat -s mnemo
 
 * vidcloud / upcloud uses https://rabbitstream.net/
 * 9animetv is the same as Aniwave ?
-* upstream.to is using hls2
+* upstream.to is using hls2 but voe.sx hls2 is working
