@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-class ExampleProvider(val plugin: TestPlugin) : MainAPI() { 
+class SflixProvider(val plugin: TestPlugin) : MainAPI() { 
     // all providers must be an instance of MainAPI
     override var mainUrl = "https://sflix.to" 
     override var name = "Sflix"
@@ -54,39 +54,6 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
     }
 
 
-    /*override val mainPage = mainPageOf(
-        "tv-show" to "TV Show",
-        "movie" to "Movie",
-        "top-imdb" to "Top-IMDB",
-    )
-
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // page: An integer > 0, starts on 1 and counts up, Depends on how much the user has scrolled.
-        val url = "$mainUrl/${request.data}?page=$page"
-        var list = mutableListOf<AnimeSearchResponse>()
-        val res = app.get(url).document
-
-        res.select(".flw-item").mapNotNull { article ->
-            val name = article.selectFirst("h2 > a")?.text() ?: ""
-            val poster = article.selectFirst("img")?.attr("data-src")
-            val url = article.selectFirst("a.btn")?.attr("href") ?: ""
-            
-            list.add(newAnimeSearchResponse(name, url){
-                this.posterUrl = poster
-            })
-        }
-
-        return newHomePageResponse(
-            list = HomePageList(
-                name = request.name,
-                list = list,
-                isHorizontalImages = true
-            ),
-            hasNext = true
-        )
-    }*/
-
-
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val html = app.get("$mainUrl/home").text
         val document = Jsoup.parse(html)
@@ -95,8 +62,6 @@ class ExampleProvider(val plugin: TestPlugin) : MainAPI() {
         val map = mapOf(
             "Trending Movies" to "div#trending-movies",
             "Trending TV Shows" to "div#trending-tv",
-            // "Latest Movies" to "div#trending-tv", // film_list-wrap
-            // "Latest TV Shows" to "div#trending-tv", // film_list-wrap
         )
         map.forEach {
             all.add(HomePageList(

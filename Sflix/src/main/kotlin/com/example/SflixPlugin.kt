@@ -10,7 +10,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 @CloudstreamPlugin
-class TestPlugin: Plugin() {
+class SflixPlugin: Plugin() {
     var activity: AppCompatActivity? = null
 
     override fun load(context: Context) {
@@ -20,7 +20,9 @@ class TestPlugin: Plugin() {
         registerExtractorAPI(MixDropCo())
         
         // Force this extractor to be first in the list
+        // Use this when you rewrite/upgrade an existing extractor
         addExtractor(Upstream())
+        addExtractor(Voe2())
 
         registerMainAPI(ExampleProvider(this))
 
