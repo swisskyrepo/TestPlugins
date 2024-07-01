@@ -31,42 +31,38 @@ class Voe2 : ExtractorApi() {
         val redirRegex = """window.location.href = '(.*)'""".toRegex()
         val redirResult = redirRegex.find(voeDoc.html())?.groupValues?.get(1)
         if (redirResult != null){
-            Log.d("mnemo", redirResult)
+            Log.d("mnemo", "voe.sx redirect: ${redirResult}")
+            val res = app.get(redirResult, referer = referer).document
+            val script = res.select("script").find { it.data().contains("sources =") }?.data()
+            val link = Regex("[\"']hls[\"']:\\s*[\"'](.*)[\"']").find(script ?: return)?.groupValues?.get(1)
+            val videoLinks = mutableListOf<String>()
+
+            if (!link.isNullOrBlank()) {
+                videoLinks.add(
+                    when {
+                        linkRegex.matches(link) -> link
+                        else -> String(Base64.decode(link, Base64.DEFAULT))
+                    }
+                )
+            } else {            
+                val link2 = base64Regex.find(script)?.value ?: return
+                val decoded = Base64.decode(link2, Base64.DEFAULT).toString()
+                val videoLinkDTO = AppUtils.parseJson<WcoSources>(decoded)
+                videoLinkDTO.let { videoLinks.add(it.toString()) }
+            }
+            
+            Log.d("mnemo", "voe.sx video link: ${videoLink}")
+            videoLinks.forEach { videoLink ->
+                M3u8Helper.generateM3u8(
+                    name,
+                    videoLink,
+                    "$mainUrl/",
+                    headers = mapOf("Origin" to "$mainUrl/")
+                ).forEach(callback)
+            }
         }
         else{
             Log.d("mnemo", "voe.sx redir not found")
-        }
-    
-
-
-
-        val res = app.get(url, referer = referer).document
-        val script = res.select("script").find { it.data().contains("sources =") }?.data()
-        val link = Regex("[\"']hls[\"']:\\s*[\"'](.*)[\"']").find(script ?: return)?.groupValues?.get(1)
-
-        val videoLinks = mutableListOf<String>()
-        
-        if (!link.isNullOrBlank()) {
-            videoLinks.add(
-                when {
-                    linkRegex.matches(link) -> link
-                    else -> String(Base64.decode(link, Base64.DEFAULT))
-                }
-            )
-        } else {            
-            val link2 = base64Regex.find(script)?.value ?: return
-            val decoded = Base64.decode(link2, Base64.DEFAULT).toString()
-            val videoLinkDTO = AppUtils.parseJson<WcoSources>(decoded)
-            videoLinkDTO.let { videoLinks.add(it.toString()) }
-        }
-        
-        videoLinks.forEach { videoLink ->
-            M3u8Helper.generateM3u8(
-                name,
-                videoLink,
-                "$mainUrl/",
-                headers = mapOf("Origin" to "$mainUrl/")
-            ).forEach(callback)
         }
     }
 	
